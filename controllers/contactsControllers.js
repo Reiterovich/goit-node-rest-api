@@ -2,10 +2,10 @@ import * as contactsService from "../services/contactsServices.js";
 
 import HttpError from "../helpers/HttpError.js";
 
-import {
-  createContactSchema,
-  updateContactSchema,
-} from "../schemas/contactsSchemas.js";
+// import {
+//   createContactSchema,
+//   updateContactSchema,
+// } from "../schemas/contactsSchemas.js";
 
 import ctrlWrapper from "../decorators/ctrlWrapper.js";
 
@@ -25,19 +25,19 @@ const getOneContact = async (req, res) => {
 };
 
 const createContact = async (req, res) => {
-  const { error } = createContactSchema.validate(req.body);
-  if (error) {
-    throw HttpError(400, error.message);
-  }
+  // const { error } = createContactSchema.validate(req.body);
+  // if (error) {
+  //   throw HttpError(400, error.message);
+  // }
   const result = await contactsService.addContact(req.body);
   res.status(201).json(result);
 };
 
 const updateContact = async (req, res) => {
-  const { error } = updateContactSchema.validate(req.body);
-  if (error) {
-    throw HttpError(400, error.message);
-  }
+  // const { error } = updateContactSchema.validate(req.body);
+  // if (error) {
+  //   throw HttpError(400, error.message);
+  // }
   const { id } = req.params;
   const result = await contactsService.updateContactById(id, req.body);
   if (!result) {
