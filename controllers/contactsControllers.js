@@ -35,7 +35,7 @@ const updateContact = async (req, res) => {
 
 const deleteContact = async (req, res) => {
   const { id } = req.params;
-  const result = contactsService.removeContact(id);
+  const result = await contactsService.removeContact(id);
   if (!result) {
     throw HttpError(404, `Contacts with ${id} not found :(`);
   }
