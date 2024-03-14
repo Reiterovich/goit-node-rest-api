@@ -32,7 +32,7 @@ contactsRouter.put(
   contactsController.updateContact
 );
 
-contactsRouter.put(
+contactsRouter.patch(
   "/:id/favorite",
   isValidId,
   validateBody(updateFavoriteSchema),

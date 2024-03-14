@@ -39,9 +39,7 @@ const deleteContact = async (req, res) => {
   if (!result) {
     throw HttpError(404, `Contacts with ${id} not found :(`);
   }
-  res.json({
-    message: "Delete seccess",
-  });
+  res.json(result);
 };
 
 const updateStatusContact = async (req, res) => {
