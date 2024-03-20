@@ -23,7 +23,7 @@ const authenticate = async (req, _, next) => {
     }
 
     req.user = user;
-    console.log(user);
+
     next();
   } catch (error) {
     next(HttpError(401, error.message));

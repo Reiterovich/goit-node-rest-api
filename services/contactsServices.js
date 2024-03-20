@@ -1,9 +1,10 @@
 import Contact from "../models/contact.js";
 
-export const listContacts = () => Contact.find();
+export const listContacts = (filter = {}, query = {}) =>
+  Contact.find(filter, null, query);
 
-export const addContact = ({ name, email, phone }) =>
-  Contact.create({ name, email, phone });
+export const addContact = ({ name, email, phone, owner }) =>
+  Contact.create({ name, email, phone, owner });
 
 export const getContactById = (id) => Contact.findById(id);
 

@@ -49,7 +49,16 @@ const signin = async (req, res) => {
   });
 };
 
+const getCurrent = async (res, req) => {
+  const { username, email } = req.user;
+  res.json({
+    username,
+    email,
+  });
+};
+
 export default {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
+  getCurrent: ctrlWrapper(getCurrent),
 };
