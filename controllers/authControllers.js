@@ -17,8 +17,10 @@ const signup = async (req, res) => {
   const newUser = await authService.signup(req.body);
 
   res.status(201).json({
-    username: newUser.username,
-    useremail: newUser.email,
+    user: {
+      email: "example@example.com",
+      subscription: "starter",
+    },
   });
 };
 
@@ -47,14 +49,18 @@ const signin = async (req, res) => {
 
   res.json({
     token,
+    user: {
+      email: "example@example.com",
+      subscription: "starter",
+    },
   });
 };
 
 const getCurrent = async (req, res) => {
-  const { username, email } = req.user;
+  const { subscription, email } = req.user;
   res.json({
-    username,
     email,
+    subscription,
   });
 };
 
@@ -62,9 +68,7 @@ const signout = async (req, res) => {
   const { _id } = req.user;
   await authService.updateUser({ _id }, { token: "" });
 
-  res.json({
-    message: "Signout seccess!",
-  });
+  res.sendStatus(204);
 };
 
 export default {
