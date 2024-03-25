@@ -12,6 +12,7 @@ import {
   updateContactSchema,
   updateFavoriteSchema,
 } from "../schemas/contactsSchemas.js";
+import verifyContactOwner from "../middlewares/verifyContactOwner.js";
 
 const contactsRouter = express.Router();
 
@@ -19,9 +20,19 @@ contactsRouter.use(authenticate);
 
 contactsRouter.get("/", contactsController.getAllContacts);
 
-contactsRouter.get("/:id", isValidId, contactsController.getOneContact);
+contactsRouter.get(
+  "/:id",
+  verifyContactOwner,
+  isValidId,
+  contactsController.getOneContact
+);
 
-contactsRouter.delete("/:id", isValidId, contactsController.deleteContact);
+contactsRouter.delete(
+  "/:id",
+  verifyContactOwner,
+  isValidId,
+  contactsController.deleteContact
+);
 
 contactsRouter.post(
   "/",
@@ -31,6 +42,7 @@ contactsRouter.post(
 
 contactsRouter.put(
   "/:id",
+  verifyContactOwner,
   isValidId,
   validateBody(updateContactSchema),
   contactsController.updateContact
@@ -38,6 +50,7 @@ contactsRouter.put(
 
 contactsRouter.patch(
   "/:id/favorite",
+  verifyContactOwner,
   isValidId,
   validateBody(updateFavoriteSchema),
   contactsController.updateStatusContact
