@@ -1,20 +1,32 @@
 import jwt from "jsonwebtoken";
 
+import fs from "fs/promises";
+
+import path from "path";
+
 import * as authService from "../services/authServices.js";
 
 import HttpError from "../helpers/HttpError.js";
 
 import ctrlWrapper from "../decorators/ctrlWrapper.js";
 
+const avatarsPath = path.resolve("public", "avatars");
+
 const { JWT_SECRET } = process.env;
 
 const signup = async (req, res) => {
+  // console.log(req.body);
+  // console.log(req.file);
   const { email } = req.body;
   const user = await authService.findUser({ email });
   if (user) {
     throw HttpError(409, "Email in use");
   }
   const newUser = await authService.signup(req.body);
+
+  // const { path: oldPath, filename } = req.file;
+  // const newPath = path.join(avatarsPath, filename);
+  // await fs.rename(oldPath, newPath);
 
   res.status(201).json({
     user: {
