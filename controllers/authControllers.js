@@ -14,9 +14,26 @@ const avatarsPath = path.resolve("public", "avatars");
 
 const { JWT_SECRET } = process.env;
 
+const addAvatars = async (req, res) => {
+  const { path: oldPath, filename } = req.file;
+  const newPath = path.join(avatarsPath, filename);
+  await fs.rename(oldPath, newPath);
+  const { _id } = req.user;
+
+  await authService.exchangeAvatar(
+    { _id },
+    { filename },
+    { avatarURL: newPath }
+  );
+
+  res.json({
+    avatarURL: newPath,
+  });
+};
+
 const signup = async (req, res) => {
-  // console.log(req.body);
-  // console.log(req.file);
+  console.log(req.body);
+  console.log(req.file);
   const { email } = req.body;
   const user = await authService.findUser({ email });
   if (user) {
@@ -88,4 +105,5 @@ export default {
   signin: ctrlWrapper(signin),
   getCurrent: ctrlWrapper(getCurrent),
   signout: ctrlWrapper(signout),
+  addAvatars: ctrlWrapper(addAvatars),
 };
